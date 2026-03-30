@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Nikita Mate — AI Researcher & Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg: #f5f3ef;
+  --sidebar-bg: #1c1917;
+  --card: #ffffff;
+  --ink: #18181b;
+  --soft: #52525b;
+  --muted: #3c3c44ef;
+  --rule: #8d8d93;
+  --accent: #c9a96e;
+  --accent2: #8b7355;
+  --tab-active: #1c1917;
+  --radius: 16px;
+  --shadow: 0 4px 24px rgba(0,0,0,0.07);
+  --shadow-md: 0 8px 40px rgba(0,0,0,0.12);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;font-size:15px;}
+body{
+  background:var(--bg);
+  font-family:'Outfit',sans-serif;
+  font-weight:400;
+  color:var(--ink);
+  min-height:100vh;
+  display:flex;
+  justify-content:center;   /* ⭐ CENTER LAYOUT */
+  transform: scale(1.15);   /* increase this: 1.1 → 1.2 → 1.3 */
+  transform-origin: top center;}
+
+.container{
+  display:flex;
+  max-width:1200px;
+  width:100%;
+  gap:30px;
+}
+
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-thumb{background:var(--rule);border-radius:2px;}
+
+/* ── SIDEBAR ── */
+.sidebar{
+  width:300px;
+  min-width:300px;
+  background:var(--sidebar-bg);
+  min-height:100vh;
+  position:sticky;
+  top: 40px;;
+  height:100vh;
+  overflow-y:auto;
+  display:flex;
+  flex-direction:column;
+  padding:40px 28px;
+  gap:32px;
+  border-radius:20px;
+}
+.sidebar::-webkit-scrollbar{width:0;}
+
+/* Photo */
+.photo-wrap{
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:20px;
+}
+.photo-ring{
+  width:140px;height:140px;
+  border-radius:50%;
+  padding:3px;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  flex-shrink:0;
+}
+.photo-inner{
+  width:100%;height:100%;
+  border-radius:50%;
+  overflow:hidden;
+  background:#2c2925;
+  display:flex;align-items:center;justify-content:center;
+}
+.photo-inner img{width:100%;height:100%;object-fit:cover;object-position:center top;}
+.photo-placeholder{
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  color:#5c5750;
+}
+.photo-placeholder svg{width:40px;height:40px;}
+.photo-placeholder span{font-size:9px;letter-spacing:0.1em;text-transform:uppercase;}
+
+.sidebar-name{
+  font-family:'DM Serif Display',serif;
+  font-size:22px;
+  color:#fafaf9;
+  text-align:center;
+  line-height:1.2;
+}
+.sidebar-title{
+  font-size:11px;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:var(--accent);
+  text-align:center;
+  margin-top:4px;
+}
+
+/* Divider */
+.s-rule{height:1px;background:rgba(255,255,255,0.08);width:100%;}
+
+/* Contact list */
+.contact-list{display:flex;flex-direction:column;gap:12px;}
+.contact-item{
+  display:flex;align-items:center;gap:12px;
+  text-decoration:none;
+}
+.contact-icon{
+  width:36px;height:36px;border-radius:8px;
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.08);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+  transition:background 0.2s,border-color 0.2s;
+}
+.contact-item:hover .contact-icon{background:rgba(201,169,110,0.15);border-color:rgba(201,169,110,0.3);}
+.contact-icon svg{width:15px;height:15px;color:#c9a96e;}
+.contact-item:hover .contact-icon svg{color:var(--accent);}
+.contact-text{display:flex;flex-direction:column;gap:1px;}
+.contact-label{font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:#57534e;}
+.contact-val{font-size:12px;color:#f0efee;transition:color 0.2s;word-break:break-all;}
+.contact-item:hover .contact-val{color:var(--accent);}
+
+/* Skills sidebar */
+.s-section-title{
+  font-size:9px;letter-spacing:0.14em;text-transform:uppercase;
+  color:#f4f2f0;margin-bottom:12px;
+}
+.skill-bars{display:flex;flex-direction:column;gap:10px;}
+.skill-bar-item{display:flex;flex-direction:column;gap:5px;}
+.skill-bar-label{font-size:11px;color:#f0efee;}
+.skill-bar-track{height:3px;background:rgba(255,255,255,0.07);border-radius:2px;overflow:hidden;}
+.skill-bar-fill{height:100%;background:linear-gradient(90deg,var(--accent2),var(--accent));border-radius:2px;transform:scaleX(0);transform-origin:left;transition:transform 1s ease;}
+.skill-bar-fill.animated{transform:scaleX(1);}
+
+/* ── MAIN ── */
+.main{
+  flex:1;
+  padding:40px 44px;
+  max-width:1000px;
+  margin: 40px auto;   /* ⭐ THIS CENTERS EVERYTHING */
+  background:transparent;
+}
+
+/* ── TABS ── */
+.tabs{
+  display:flex;gap:4px;
+  background:var(--card);
+  border-radius:12px;
+  padding:6px;
+  box-shadow:var(--shadow);
+  margin-bottom:36px;
+  flex-wrap:wrap;
+}
+.tab-btn{
+  padding:9px 20px;
+  border:none;border-radius:8px;
+  font-family:'Outfit',sans-serif;
+  font-size:12px;font-weight:500;
+  letter-spacing:0.04em;
+  cursor:pointer;
+  transition:all 0.2s;
+  background:transparent;
+  color:var(--muted);
+  white-space:nowrap;
+}
+.tab-btn:hover{color:var(--ink);}
+.tab-btn.active{
+  background:var(--tab-active);
+  color:#fafaf9;
+  box-shadow:0 2px 8px rgba(0,0,0,0.15);
+}
+
+/* ── TAB PANES ── */
+.pane{display:none;}
+.pane.active{display:block;animation:fadeIn 0.3s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+
+/* ── ABOUT ── */
+.about-intro{
+  background:var(--card);
+  border-radius:var(--radius);
+  padding:36px;
+  box-shadow:var(--shadow);
+  margin-bottom:20px;
+}
+.pane-heading{
+  font-family:'DM Serif Display',serif;
+  font-size:28px;
+  margin-bottom:16px;
+  line-height:1.2;
+}
+.pane-heading em{font-style:italic;color:var(--soft);}
+.body-text{font-size:14px;color:var(--soft);line-height:1.85;}
+.body-text+.body-text{margin-top:14px;}
+
+/* What I do cards */
+.what-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:20px;}
+.what-card{
+  background:var(--card);
+  border-radius:12px;
+  padding:24px;
+  box-shadow:var(--shadow);
+  display:flex;gap:16px;align-items:flex-start;
+  transition:box-shadow 0.2s,transform 0.2s;
+}
+.what-card:hover{box-shadow:var(--shadow-md);transform:translateY(-2px);}
+.what-icon{
+  width:42px;height:42px;border-radius:10px;
+  background:linear-gradient(135deg,#1c1917,#3d3531);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.what-icon svg{width:20px;height:20px;color:var(--accent);}
+.what-title{font-size:13px;font-weight:600;margin-bottom:4px;}
+.what-desc{font-size:12px;color:var(--muted);line-height:1.6;}
+
+/* ── EDUCATION ── */
+.timeline{display:flex;flex-direction:column;gap:14px;}
+.tcard{
+  background:var(--card);border-radius:var(--radius);
+  padding:28px 32px;box-shadow:var(--shadow);
+  position:relative;overflow:hidden;
+  transition:box-shadow 0.2s,transform 0.2s;
+}
+.tcard:hover{box-shadow:var(--shadow-md);transform:translateY(-2px);}
+.tcard::before{
+  content:'';
+  position:absolute;left:0;top:0;bottom:0;
+  width:3px;
+  background:linear-gradient(180deg,var(--accent),var(--accent2));
+}
+.tcard-period{
+  font-size:11px;letter-spacing:0.06em;
+  color:var(--accent);margin-bottom:6px;
+  display:flex;align-items:center;gap:6px;
+}
+.tcard-org{font-size:18px;font-family:'DM Serif Display',serif;margin-bottom:4px;}
+.tcard-role{font-size:13px;font-weight:500;color:var(--soft);margin-bottom:10px;}
+.tcard-meta{font-size:12px;color:var(--muted);margin-bottom:12px;}
+.tcard-points{list-style:none;padding:0;display:flex;flex-direction:column;gap:6px;}
+.tcard-points li{
+  font-size:13px;color:var(--soft);
+  padding-left:16px;position:relative;line-height:1.65;
+}
+.tcard-points li::before{
+  content:'';position:absolute;left:0;top:9px;
+  width:5px;height:5px;border-radius:50%;
+  background:var(--accent);
+}
+.badge{
+  display:inline-block;padding:2px 10px;border-radius:20px;
+  font-size:10px;letter-spacing:0.06em;
+  background:rgba(201,169,110,0.1);color:var(--accent);
+  border:1px solid rgba(201,169,110,0.25);
+  margin-left:6px;
+}
+
+/* ── EXPERIENCE ── */
+/* reuses .tcard */
+
+/* ── PUBLICATIONS ── */
+.pub-grid{display:flex;flex-direction:column;gap:14px;}
+.pub-card{
+  background:var(--card);border-radius:var(--radius);
+  padding:24px 28px;box-shadow:var(--shadow);
+  display:grid;grid-template-columns:48px 1fr;gap:20px;align-items:start;
+  transition:box-shadow 0.2s,transform 0.2s;
+}
+.pub-card:hover{box-shadow:var(--shadow-md);transform:translateY(-2px);}
+.pub-num{
+  font-family:'DM Serif Display',serif;
+  font-size:36px;color:var(--rule);line-height:1;
+  transition:color 0.25s;
+}
+.pub-card:hover .pub-num{color:var(--accent);}
+.pub-venue{
+  font-size:10px;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:5px;
+}
+.pub-title{font-size:14px;font-weight:500;line-height:1.5;margin-bottom:6px;}
+.pub-authors{font-size:12px;color:var(--muted);}
+.pub-submitted{
+  display:inline-block;margin-left:8px;
+  padding:1px 8px;border-radius:4px;
+  font-size:10px;background:rgba(201,169,110,0.08);
+  color:var(--accent);border:1px solid rgba(201,169,110,0.2);
+}
+
+/* ── PROJECTS ── */
+.proj-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.proj-card{
+  background:var(--card);border-radius:var(--radius);
+  padding:26px;box-shadow:var(--shadow);
+  display:flex;flex-direction:column;
+  transition:box-shadow 0.2s,transform 0.2s;
+  position:relative;overflow:hidden;
+}
+.proj-card:hover{box-shadow:var(--shadow-md);transform:translateY(-2px);}
+.proj-card::after{
+  content:'';
+  position:absolute;bottom:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--accent2),var(--accent));
+  transform:scaleX(0);transform-origin:left;
+  transition:transform 0.35s ease;
+}
+.proj-card:hover::after{transform:scaleX(1);}
+.proj-num{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;}
+.proj-title{font-family:'DM Serif Display',serif;font-size:18px;margin-bottom:10px;line-height:1.25;}
+.proj-desc{font-size:12px;color:var(--soft);line-height:1.7;flex:1;margin-bottom:16px;}
+.tags{display:flex;flex-wrap:wrap;gap:6px;}
+.tag{
+  font-size:10px;padding:3px 10px;border-radius:4px;
+  background:#f4f4f5;color:var(--soft);
+  border:1px solid var(--rule);letter-spacing:0.04em;
+}
+
+/* ── CONTACT ── */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:24px;}
+.ccard{
+  background:var(--card);border-radius:var(--radius);
+  padding:24px;box-shadow:var(--shadow);
+  display:flex;gap:16px;align-items:center;
+  text-decoration:none;color:var(--ink);
+  transition:box-shadow 0.2s,transform 0.2s;
+}
+.ccard:hover{box-shadow:var(--shadow-md);transform:translateY(-2px);}
+.ccard-icon{
+  width:44px;height:44px;border-radius:10px;
+  background:linear-gradient(135deg,#1c1917,#3d3531);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.ccard-icon svg{width:18px;height:18px;color:var(--accent);}
+.ccard-label{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:3px;}
+.ccard-val{font-size:13px;font-weight:500;word-break:break-all;}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  body{flex-direction:column;}
+  .sidebar{
+    width:100%;min-width:0;
+    height:auto;position:static;
+    flex-direction:row;flex-wrap:wrap;
+    padding:28px 24px;gap:24px;
+    justify-content:space-between;
+  }
+  .photo-wrap{flex-direction:row;align-items:center;width:auto;}
+  .sidebar-name,.sidebar-title{text-align:left;}
+  .main{padding:24px;}
+  .what-grid,.proj-grid,.contact-grid{grid-template-columns:1fr;}
+}
+@media(max-width:600px){
+  .tabs{gap:2px;}
+  .tab-btn{padding:8px 12px;font-size:11px;}
+  .pub-card{grid-template-columns:1fr;}
+  .pub-num{display:none;}
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">   <!-- ⭐ ADD THIS -->
+
+<!-- ══ SIDEBAR ══ -->
+<aside class="sidebar">
+
+  <div class="photo-wrap">
+    <div class="photo-ring">
+      <div class="photo-inner">
+        <img src="your-photo.png" alt="Nikita Mate" class="profile-photo">
+        <div class="photo-placeholder">
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="sidebar-name">Nikita Mate</div>
+      <div class="sidebar-title">AI Researcher &amp; Engineer</div>
+    </div>
+  </div>
+
+  <div class="s-rule"></div>
+
+<!-- Contacts -->
+<div>
+  <p class="s-section-title">Contact</p>
+
+  <div class="contact-list">
+
+    <!-- Email -->
+    <a href="mailto:nikitamate012@gmail.com" class="contact-item">
+      <div class="contact-icon">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+        </svg>
+      </div>
+      <div class="contact-text">
+        <span class="contact-label">Email</span>
+        <span class="contact-val">nikitamate012@gmail.com</span>
+      </div>
+    </a>
+
+    <!-- Phone -->
+    <a href="tel:+919284339680" class="contact-item">
+      <div class="contact-icon">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+        </svg>
+      </div>
+      <div class="contact-text">
+        <span class="contact-label">Phone</span>
+        <span class="contact-val">+91 9284 339 680</span>
+      </div>
+    </a>
+
+    <!-- LinkedIn -->
+    <a href="https://www.linkedin.com/in/nikita-mate1/" target="_blank" class="contact-item">
+      <div class="contact-icon">
+        <svg fill="currentColor" viewBox="0 0 24 24">
+          <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/>
+          <circle cx="4" cy="4" r="2"/>
+        </svg>
+      </div>
+      <div class="contact-text">
+        <span class="contact-label">View Profile</span>
+        <span class="contact-val">LinkedIn</span>
+      </div>
+    </a>
+
+  </div>
+</div>
+
+<div class="s-rule"></div>
+
+<!-- Work Section -->
+<div>
+  <p class="s-section-title">Check out my work</p>
+
+  <div class="contact-list">
+
+    <!-- GitHub -->
+    <a href="https://github.com/nikitamate1" target="_blank" class="contact-item">
+      <div class="contact-icon">
+        <svg fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 .5C5.73.5.99 5.24.99 11.51c0 4.98 3.23 9.21 7.72 10.7.56.1.77-.24.77-.54v-2.02c-3.14.68-3.8-1.51-3.8-1.51-.51-1.3-1.24-1.65-1.24-1.65-1.02-.7.08-.69.08-.69 1.13.08 1.72 1.16 1.72 1.16 1 .1.83 1.65 2.91 1.17.1-.73.39-1.22.71-1.5-2.5-.28-5.13-1.25-5.13-5.57 0-1.23.44-2.23 1.16-3.02-.12-.28-.5-1.42.11-2.96 0 0 .95-.3 3.1 1.15a10.7 10.7 0 015.64 0c2.15-1.45 3.1-1.15 3.1-1.15.61 1.54.23 2.68.11 2.96.72.79 1.16 1.79 1.16 3.02 0 4.33-2.63 5.28-5.14 5.56.4.34.75 1.01.75 2.04v3.02c0 .3.2.65.77.54 4.49-1.49 7.72-5.72 7.72-10.7C23.01 5.24 18.27.5 12 .5z"/>
+        </svg>
+      </div>
+      <div class="contact-text">
+        <span class="contact-label">View Projects</span>
+        <span class="contact-val">Github</span>
+      </div>
+    </a>
+
+    <!-- Publications -->
+    <a href="https://scholar.google.com/citations?user=wdwiuaYAAAAJ&hl=en" target="_blank" class="contact-item">
+      <div class="contact-icon">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/>
+        </svg>
+      </div>
+      <div class="contact-text">
+        <span class="contact-label">View Research</span>
+        <span class="contact-val">Google Scholar</span>
+      </div>
+    </a>
+
+  </div>
+</div>
+
+  <!-- Skills -->
+  <div>
+    <p class="s-section-title">Core Skills</p>
+    <div class="skill-bars">
+      <div class="skill-bar-item"><span class="skill-bar-label">Machine Learning</span><div class="skill-bar-track"><div class="skill-bar-fill" data-w="0.92"></div></div></div>
+      <div class="skill-bar-item"><span class="skill-bar-label">Deep Learning</span><div class="skill-bar-track"><div class="skill-bar-fill" data-w="0.90"></div></div></div>
+      <div class="skill-bar-item"><span class="skill-bar-label">Computer Vision</span><div class="skill-bar-track"><div class="skill-bar-fill" data-w="0.88"></div></div></div>
+      <div class="skill-bar-item"><span class="skill-bar-label">NLP &amp; Generative AI</span><div class="skill-bar-track"><div class="skill-bar-fill" data-w="0.82"></div></div></div>
+      <div class="skill-bar-item"><span class="skill-bar-label">Python &amp; SQL</span><div class="skill-bar-track"><div class="skill-bar-fill" data-w="0.95"></div></div></div>
+    </div>
+  </div>
+
+</aside>
+
+<!-- ══ MAIN ══ -->
+<main class="main">
+
+  <!-- Tabs -->
+  <div class="tabs" role="tablist">
+    <button class="tab-btn active" onclick="switchTab('about',this)">About</button>
+    <button class="tab-btn" onclick="switchTab('education',this)">Education</button>
+    <button class="tab-btn" onclick="switchTab('experience',this)">Experience</button>
+    <button class="tab-btn" onclick="switchTab('publications',this)">Publications</button>
+    <button class="tab-btn" onclick="switchTab('projects',this)">Projects</button>
+    <button class="tab-btn" onclick="switchTab('contact',this)">Contact</button>
+  </div>
+
+  <!-- ── ABOUT ── -->
+  <div class="pane active" id="pane-about">
+    <div class="about-intro">
+      <h2 class="pane-heading">Who am I?</h2>
+      <p class="body-text">Hi, I'm Nikita Mate, an AI Researcher and Engineer based in India. I graduated in Artificial Intelligence from G H Raisoni College of Engineering and bring nearly two years of combined research and industry experience to the table.</p>
+      <p class="body-text" style="margin-top:14px;">I've worked with Hong Kong Metropolitan University as a Research Assistant, publishing work on optimization algorithms and wearable sensing, and with Konverge.AI where I built production-grade LLM applications, multimodal AI chatbots, and Computer Vision systems.</p>
+      <p class="body-text" style="margin-top:14px;">My approach is grounded in curiosity-driven research and rigorous experimentation. I love working at the intersection of theory and real-world application.</p>
+    </div>
+
+    <div class="what-grid">
+      <div class="what-card">
+        <div class="what-icon">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+        </div>
+        <div>
+          <div class="what-title">ML &amp; Deep Learning</div>
+          <div class="what-desc">TensorFlow, PyTorch, Keras — from training to deployment across vision and NLP tasks.</div>
+        </div>
+      </div>
+      <div class="what-card">
+        <div class="what-icon">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+        </div>
+        <div>
+          <div class="what-title">Computer Vision</div>
+          <div class="what-desc">Object Detection, YOLOv4/7/8, R-CNN, OpenCV — visual intelligence for real-world systems.</div>
+        </div>
+      </div>
+      <div class="what-card">
+        <div class="what-icon">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+        </div>
+        <div>
+          <div class="what-title">LLM &amp; Generative AI</div>
+          <div class="what-desc">RAG pipelines, LangChain, MCP-based agents, multi-tool orchestration, and production deployment.</div>
+        </div>
+      </div>
+      <div class="what-card">
+        <div class="what-icon">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+        </div>
+        <div>
+          <div class="what-title">Research &amp; Optimization</div>
+          <div class="what-desc">Published work in global optimization, wearable IMU sensing, and signal processing.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── EDUCATION ── -->
+  <div class="pane" id="pane-education">
+    <div class="timeline">
+      <div class="tcard">
+        <div class="tcard-period">Aug 2019 — Jun 2023</div>
+        <div class="tcard-org">G H Raisoni College of Engineering</div>
+        <div class="tcard-role">Bachelor of Technology in Artificial Intelligence</div>
+        <div class="tcard-meta">Nagpur, India &nbsp;·&nbsp; CGPA: 8.45 / 10</div>
+        <ul class="tcard-points">
+          <li>Specialized in Artificial Intelligence with research in Deep Learning, Computer Vision, and NLP.</li>
+          <li>Published research on Animal Detection for Vehicles using YOLOv4 and Song Emotion Classification using CNNs.</li>
+          <li>Active IEEE GHRCS Volunteer — organized technical workshops, mentored students at hackathons.</li>
+          <li>Millennium Campus Network participant — coordinated social impact and sustainability initiatives.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── EXPERIENCE ── -->
+  <div class="pane" id="pane-experience">
+    <div class="timeline">
+
+      <div class="tcard">
+        <div class="tcard-period">Nov 2024 — Sep 2025</div>
+        <div class="tcard-org">Hong Kong Metropolitan University</div>
+        <div class="tcard-role">Research Assistant <span class="badge">Research</span></div>
+        <div class="tcard-meta">Hong Kong (Remote) &nbsp;·&nbsp; AI &amp; Optimization</div>
+        <ul class="tcard-points">
+          <li>Proposed P-PROS-AE — a parallel optimization algorithm with Adaptive Encoding, tested on 12 benchmark functions achieving faster convergence and reduced solution errors vs. baseline PROS.</li>
+          <li>Investigated IMU-based running pace estimation using a hybrid CNN-LSTM model across 14 participants, reaching 88.68–97.90% accuracy.</li>
+          <li>Co-authored 2 papers submitted to Springer Journal of Global Optimization and IET Electronics Letters.</li>
+        </ul>
+      </div>
+
+      <div class="tcard">
+        <div class="tcard-period">Aug 2023 — Jul 2024</div>
+        <div class="tcard-org">Konverge.AI Pvt. Ltd.</div>
+        <div class="tcard-role">Assistant Engineer, Data Science <span class="badge">Industry</span></div>
+        <div class="tcard-meta">Nagpur, India</div>
+        <ul class="tcard-points">
+          <li>Built a Python Flask email automation pipeline with HMAC-secured Typeform webhooks and a Streamlit content management interface for dynamic HTML email delivery.</li>
+          <li>Developed a GPT-based QA chatbot integrating OpenAI API and Vision API for multimodal, domain-specific interactions.</li>
+          <li>Created a DALL·E Mini text-to-image application with prompt engineering and user activity dashboard.</li>
+        </ul>
+      </div>
+
+      <div class="tcard">
+        <div class="tcard-period">Jul 2022 — Aug 2023</div>
+        <div class="tcard-org">Konverge.AI Pvt. Ltd.</div>
+        <div class="tcard-role">Data Science Intern <span class="badge">Industry</span></div>
+        <div class="tcard-meta">Nagpur, India</div>
+        <ul class="tcard-points">
+          <li>Built an interactive LinkedIn Analytics dashboard with Streamlit, Flask, Plotly, and Pandas for KPI tracking, follower trend analysis, and engagement insights.</li>
+          <li>Trained YOLOv7, YOLOv8, and Faster R-CNN for document layout element detection across diverse page formats; optimized YOLOv8 for production inference efficiency.</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── PUBLICATIONS ── -->
+  <div class="pane" id="pane-publications">
+    <div class="pub-grid">
+
+      <div class="pub-card">
+        <div class="pub-num">01</div>
+        <div>
+          <div class="pub-venue">Journal of Global Optimization · Springer</div>
+          <div class="pub-title">Parallel Pure Random Orthogonal Search with Adaptive Encoding (P-PROS-AE)</div>
+          <div class="pub-authors">N. Mate, R. Mandal, B. K.-B. Tong, K. Hung, K. T. Chui, Z. Li, D. H.-K. Chow, H. Y. Kwan <span class="pub-submitted">Submitted · 2026</span></div>
+        </div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-num">02</div>
+        <div>
+          <div class="pub-venue">IET Electronics Letters</div>
+          <div class="pub-title">Investigation Configurations for IMU Placement Running Pace Estimation using CNN-LSTM</div>
+          <div class="pub-authors">R. Mandal, N. Mate, B. K.-B. Tong, K. Hung, K. T. Chui, Z. Li, D. H.-K. Chow, H. Y. Kwan, D. Akre <span class="pub-submitted">Submitted · 2026</span></div>
+        </div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-num">03</div>
+        <div>
+          <div class="pub-venue">IJRASET · Volume 11, Issue IV · 2023</div>
+          <div class="pub-title">Animal Detection for Vehicle</div>
+          <div class="pub-authors">Mate N., Bhat P., Mahalle G., Konde S., Arvikar S.</div>
+        </div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-num">04</div>
+        <div>
+          <div class="pub-venue">IEEE GECOST 2022 · Miri Sarawak, Malaysia</div>
+          <div class="pub-title">Emotion Classification of Songs Using Deep Learning</div>
+          <div class="pub-authors">N. Mate, D. Akre, G. Patil, G. Sakarkar, T. A. Basuki &nbsp;·&nbsp; DOI: 10.1109/GECOST55694.2022.10010485</div>
+        </div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-num">05</div>
+        <div>
+          <div class="pub-venue">ICCICA-21 · Conference Proceedings</div>
+          <div class="pub-title">Energy Efficient Data Transmission in Wireless Sensor Network Using Cross-Site Leaping Algorithm</div>
+          <div class="pub-authors">Penchala S. K., Dutta P., Mandal R., Bhat P., Akre D., Mate N.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── PROJECTS ── -->
+  <div class="pane" id="pane-projects">
+    <div class="proj-grid">
+
+      <div class="proj-card">
+        <div class="proj-num">Project 01</div>
+        <div class="proj-title">30 Days of AI Challenge</div>
+        <div class="proj-desc">Built LLM-powered apps with Streamlit and Snowflake Cortex — RAG systems, session-based chat, document ingestion pipelines, and multi-tool agent orchestration with structured outputs.</div>
+        <div class="tags"><span class="tag">LLM</span><span class="tag">RAG</span><span class="tag">Streamlit</span><span class="tag">Snowflake</span><span class="tag">Agents</span></div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-num">Project 02</div>
+        <div class="proj-title">MCP-Based LLM System Design</div>
+        <div class="proj-desc">Designed an automated OpenAPI → MCP transformation engine. Built a multi-agent system with Agent-to-Agent communication for coordinated ordering and scheduling workflows.</div>
+        <div class="tags"><span class="tag">MCP</span><span class="tag">Multi-Agent</span><span class="tag">OpenAPI</span><span class="tag">LLM</span></div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-num">Project 03</div>
+        <div class="proj-title">Animal Detection for Vehicle Safety</div>
+        <div class="proj-desc">YOLOv4 system detecting animals in dashcam footage under varying lighting and weather conditions, with distance estimation for collision prevention in rural India.</div>
+        <div class="tags"><span class="tag">YOLOv4</span><span class="tag">Computer Vision</span><span class="tag">Object Detection</span></div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-num">Project 04</div>
+        <div class="proj-title">Song Emotion Classification</div>
+        <div class="proj-desc">Compared MLP, GRU, CNN, and LSTM on RAVDESS spectrograms. CNN reached 92.71% accuracy — applied to mood-based music recommendation and emotionally-aware event curation.</div>
+        <div class="tags"><span class="tag">CNN</span><span class="tag">LSTM</span><span class="tag">Audio ML</span><span class="tag">Spectrogram</span></div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-num">Project 05</div>
+        <div class="proj-title">LinkedIn Analytics Dashboard</div>
+        <div class="proj-desc">Interactive platform in Streamlit, Flask, Plotly, and Pandas to track follower trends, visitor behavior, and engagement with customizable KPI reports.</div>
+        <div class="tags"><span class="tag">Streamlit</span><span class="tag">Plotly</span><span class="tag">Flask</span><span class="tag">Analytics</span></div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-num">Project 06</div>
+        <div class="proj-title">Document Layout Detection</div>
+        <div class="proj-desc">Trained YOLOv7, YOLOv8, and Faster R-CNN to detect headers, footers, tables, and text across diverse layouts. YOLOv8 delivered the optimal accuracy–efficiency trade-off.</div>
+        <div class="tags"><span class="tag">YOLOv8</span><span class="tag">R-CNN</span><span class="tag">Document AI</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── CONTACT ── -->
+  <div class="pane" id="pane-contact">
+    <div class="contact-grid">
+      <a href="mailto:nikitamate012@gmail.com" class="ccard">
+        <div class="ccard-icon"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></div>
+        <div><div class="ccard-label">Email</div><div class="ccard-val">nikitamate012@gmail.com</div></div>
+      </a>
+      <a href="tel:+919284339680" class="ccard">
+        <div class="ccard-icon"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg></div>
+        <div><div class="ccard-label">Phone</div><div class="ccard-val">+91 9284 339 680</div></div>
+      </a>
+      <a href="https://www.linkedin.com/in/nikita-mate1/" target="_blank" class="ccard">
+        <div class="ccard-icon"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></div>
+        <div><div class="ccard-label">LinkedIn</div><div class="ccard-val">Nikita Mate</div></div>
+      </a>
+      <div class="ccard">
+        <div class="ccard-icon"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg></div>
+        <div><div class="ccard-label">Location</div><div class="ccard-val">Nagpur, Maharashtra, India</div></div>
+      </div>
+    </div>
+  </div>
+  
+
+</main>
+
+<script>
+function switchTab(id, btn) {
+  document.querySelectorAll('.pane').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('pane-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// Animate skill bars on load
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.querySelectorAll('.skill-bar-fill').forEach(el => {
+      el.style.transform = `scaleX(${el.dataset.w})`;
+    });
+  }, 400);
+});
+</script>
+</div>  <!-- ⭐ CLOSE CONTAINER -->
+</body>
+</html>
